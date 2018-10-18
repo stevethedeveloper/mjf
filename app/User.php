@@ -28,12 +28,25 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
-    public function getJWTIdentifier()
-    {
+    /**
+     * 
+     * Relationship to UserConsumed table
+     * 
+     */
+    public function user_consumed() {
+        return $this->hasMany(UserConsumed::class);
+    }
+    
+    /**
+     * 
+     * Functions for the JWT middleware
+     * 
+     */ 
+    public function getJWTIdentifier() {
         return $this->getKey();
     }
-    public function getJWTCustomClaims()
-    {
+    
+    public function getJWTCustomClaims() {
         return [];
     }
 }

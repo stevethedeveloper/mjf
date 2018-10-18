@@ -18,10 +18,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('register', 'UserController@register');
-    Route::post('login', 'UserController@authenticate');
-    Route::get('open', 'DataController@open');
+Route::post('login', 'UserController@authenticate');
+//Route::get('open', 'DataController@open');
+Route::get('drinks', 'DrinkController@getAllDrinks');
+Route::post('add_drink', 'DrinkController@add');
 
-    Route::group(['middleware' => ['jwt.verify']], function() {
-        Route::get('user', 'UserController@getAuthenticatedUser');
-        Route::get('closed', 'DataController@closed');
-         });
+/**
+ * 
+ * Routes that only get served when JWT token is present and correct
+ * 
+ */
+Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::get('user', 'UserController@getAuthenticatedUser');
+//    Route::get('closed', 'DataController@closed');
+});
