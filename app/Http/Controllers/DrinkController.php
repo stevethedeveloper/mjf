@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class DrinkController extends Controller
 {
-    public function add(Request $request)
-    {
+    public function add(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'servings' => 'required|integer|min:0',

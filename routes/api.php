@@ -22,6 +22,7 @@ Route::post('login', 'UserController@authenticate');
 //Route::get('open', 'DataController@open');
 Route::get('drinks', 'DrinkController@getAllDrinks');
 Route::post('add_drink', 'DrinkController@add');
+Route::post('consumed', 'ConsumedController@add');
 
 /**
  * 
