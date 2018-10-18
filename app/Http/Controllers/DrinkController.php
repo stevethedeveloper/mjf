@@ -10,7 +10,7 @@ class DrinkController extends Controller
 {
     public function add(Request $request)
     {
-            $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'servings' => 'required|integer|min:0',
             'caffeine_per_serving' => 'required|integer|min:0',
@@ -27,6 +27,10 @@ class DrinkController extends Controller
         ]);
 
         return response()->json(compact('drink'),201);
+    }
+    
+    public function getAllDrinks() {
+        return Drink::orderBy('name')->get();
     }
     
 }
