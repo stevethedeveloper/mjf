@@ -36,12 +36,22 @@ class ConsumedController extends Controller
     public function getConsumedForUser() {
         $user = $this->checkJwt();
 
-        $user['consumed'] = UserConsumed::where([
+        $user->consumed = UserConsumed::where([
             ['user_id', '=', $user->id],
             ['created_at', '>=', date('Y-m-d', mktime(0, 0, 0, date('n'), date('j'), date('Y')))],            
         ])->orderBy('created_at')
         ->with('Drink')
         ->get();
+        
+        $user = $user->toArray();
+        
+        $total_caffeine = 0;
+        
+        foreach ($user['consumed']->toArray() as $c) {
+            $total_caffeine += $c['servings_consumed'] * $c['drink']['caffeine_per_serving'];
+        }
+        
+        $user['consumed_total'] = $total_caffeine;
         
         return response()->json(compact('user'));
     }
