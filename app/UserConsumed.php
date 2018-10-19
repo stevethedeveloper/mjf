@@ -20,4 +20,8 @@ class UserConsumed extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function drink() {
+        return $this->belongsTo(Drink::class);
+    }
 }

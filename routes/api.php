@@ -22,7 +22,6 @@ Route::post('login', 'UserController@authenticate');
 //Route::get('open', 'DataController@open');
 Route::get('drinks', 'DrinkController@getAllDrinks');
 Route::post('add_drink', 'DrinkController@add');
-Route::post('consumed', 'ConsumedController@add');
 
 /**
  * 
@@ -31,5 +30,7 @@ Route::post('consumed', 'ConsumedController@add');
  */
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', 'UserController@getAuthenticatedUser');
+    Route::post('consumed', 'ConsumedController@add');
+    Route::get('get_user_consumed', 'ConsumedController@getConsumedForUser');
 //    Route::get('closed', 'DataController@closed');
 });

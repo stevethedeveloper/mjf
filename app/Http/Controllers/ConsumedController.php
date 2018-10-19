@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\UserConsumed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Traits\JWTCheck;
 
 class ConsumedController extends Controller
 {
+    use JWTCheck;
+    
     public function add(Request $request) {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
@@ -26,5 +31,18 @@ class ConsumedController extends Controller
         ]);
 
         return response()->json(compact('consumed'),201);
+    }
+    
+    public function getConsumedForUser() {
+        $user = $this->checkJwt();
+
+        $user['consumed'] = UserConsumed::where([
+            ['user_id', '=', $user->id],
+            ['created_at', '>=', date('Y-m-d', mktime(0, 0, 0, date('n'), date('j'), date('Y')))],            
+        ])->orderBy('created_at')
+        ->with('Drink')
+        ->get();
+        
+        return response()->json(compact('user'));
     }
 }
