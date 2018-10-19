@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Validator;
 
 class DrinkController extends Controller
 {
+    /**
+     * 
+     * Add a favorite drink to the drinks lookup table
+     * 
+     */
     public function add(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -28,6 +33,11 @@ class DrinkController extends Controller
         return response()->json(compact('drink'),201);
     }
     
+    /**
+     * 
+     * Return all drinks from the drinks table
+     * 
+     */
     public function getAllDrinks() {
         return Drink::orderBy('name')->get();
     }

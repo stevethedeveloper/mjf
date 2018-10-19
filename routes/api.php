@@ -17,10 +17,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/**
+ * 
+ * Unprotected endpoints
+ * 
+ */
 Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@authenticate');
-//Route::get('open', 'DataController@open');
 Route::get('drinks', 'DrinkController@getAllDrinks');
+// TODO: move this to protected, it is here during testing
 Route::post('add_drink', 'DrinkController@add');
 
 /**
@@ -30,7 +35,7 @@ Route::post('add_drink', 'DrinkController@add');
  */
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', 'UserController@getAuthenticatedUser');
+    Route::get('users', 'UserController@getAuthenticatedUser');
     Route::post('consumed', 'ConsumedController@add');
     Route::get('get_user_consumed', 'ConsumedController@getConsumedForUser');
-//    Route::get('closed', 'DataController@closed');
 });

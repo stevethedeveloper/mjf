@@ -13,6 +13,11 @@ class ConsumedController extends Controller
 {
     use JWTCheck;
     
+    /**
+     * 
+     * Adds a record to the user_consumed table for the current user
+     * 
+     */
     public function add(Request $request) {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
@@ -33,6 +38,11 @@ class ConsumedController extends Controller
         return response()->json(compact('consumed'),201);
     }
     
+    /**
+     * 
+     * Gets current records and caffeine total for the current user
+     * 
+     */
     public function getConsumedForUser() {
         $user = $this->checkJwt();
 
