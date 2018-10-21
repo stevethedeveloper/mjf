@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Drink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class DrinkController extends Controller
 {

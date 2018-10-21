@@ -19,8 +19,9 @@ class ConsumedController extends Controller
      * 
      */
     public function add(Request $request) {
+        $user = $this->checkJwt();
+
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer',
             'drink_id' => 'required|integer',
             'servings_consumed' => 'required|integer',
         ]);
@@ -30,12 +31,12 @@ class ConsumedController extends Controller
         }
 
         $consumed = UserConsumed::create([
-            'user_id' => $request->get('user_id'),
+            'user_id' => $user['id'],
             'drink_id' => $request->get('drink_id'),
             'servings_consumed' => $request->get('servings_consumed'),
         ]);
 
-        return response()->json(compact('consumed'),201);
+        return response()->json(compact('consumed'), 201);
     }
     
     /**

@@ -24,7 +24,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
  */
 Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@authenticate');
-Route::get('drinks', 'DrinkController@getAllDrinks');
 // TODO: move this to protected, it is here during testing
 Route::post('add_drink', 'DrinkController@add');
 
@@ -38,4 +37,5 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('users', 'UserController@getAuthenticatedUser');
     Route::post('consumed', 'ConsumedController@add');
     Route::get('get_user_consumed', 'ConsumedController@getConsumedForUser');
+    Route::get('drinks', 'DrinkController@getAllDrinks');
 });
